@@ -7,7 +7,7 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!("Your secret number is {secret_number}");
+    // println!("Your secret number is {secret_number}");
 
     loop {
         println!("Please input your guess.");
@@ -17,8 +17,13 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-    
-        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        
+        //Err(_) arm catches all Err. Underscore is a catchall
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+        
     
         println!("You guessed: {guess}");
     
